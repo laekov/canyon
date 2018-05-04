@@ -1,2 +1,4 @@
 *.swp
 *.dSYM
+bin
+obj

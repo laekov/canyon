@@ -1,4 +1,4 @@
-cc = g++ -g -Isrc/include
+cc = g++ -g -Iheaders
 headers = $(wildcard headers/*.hh)
 objects = $(headers:headers/%.hh=obj/%.o)
 sources = $(headers:headers/%.hh=src/%.cc)
@@ -10,7 +10,7 @@ default : mkdir $(objects) bin/main
 bin/% : src/%.cc $(objects)
 	$(cc) $< $(objects) -o $@
 
-obj/%.o : src/%.cc src/include/%.hh  $(headers)
+obj/%.o : src/%.cc headers/%.hh  $(headers)
 	$(cc) -c $< -o $@
 
 mkdir :
