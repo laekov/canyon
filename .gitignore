@@ -1,4 +1,5 @@
 *.swp
 *.dSYM
+*.swo
 bin
 obj
