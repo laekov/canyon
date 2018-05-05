@@ -34,7 +34,7 @@ with open('data/faces.mypoints', 'w') as f:
         elif axe == 1: 
             (r, g, b) = (0, 0, 255)
         else:
-            (r, g, b) = (55, 55, 55)
+            (r, g, b) = (256, 256, 256)
         facestrs.append(face2str(pb[0], pb[1], pb[2], pb[3], r, g, b))
         f.write('\n'.join(facestrs))
 

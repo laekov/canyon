@@ -1,6 +1,12 @@
+#include <define.hh>
+
 #include <triangle.hh>
 #include <line.hh>
 #include <plane.hh>
+
+#ifdef DEBUG_OUT
+#include <iostream>
+#endif
 
 namespace Canyon {
 	bool Triangle::pointIn(Point3 p) {

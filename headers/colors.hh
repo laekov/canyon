@@ -2,6 +2,7 @@
 #define COLORS_HH
 
 #include <istream>
+#include <ostream>
 
 namespace Canyon {
 	const double color_visible_thres = 1e-3;
@@ -21,6 +22,7 @@ namespace Canyon {
 	};
 
 	std::istream& operator >>(std::istream& fin, Colors& c);
+	std::ostream& operator <<(std::ostream& fou, Colors& c);
 	Colors operator *(const Colors& a, const Colors& b);
 	Colors operator +(const Colors& a, const Colors& b);
 };

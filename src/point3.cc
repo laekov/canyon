@@ -43,6 +43,10 @@ namespace Canyon {
 		return fin >> p.x >> p.y >> p.z;
 	}
 
+	std::ostream& operator <<(std::ostream& fou, Point3& p) {
+		return fou << "(" <<  p.x << ", " << p.y << ", " << p.z << ")";
+	}
+
 	bool operator ==(const Point3& a, const Point3& b) {
 		return !sgn(a.x - b.x) && !sgn(a.y - b.y) && !sgn(a.z - b.z);
 	}

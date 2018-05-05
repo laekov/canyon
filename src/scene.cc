@@ -1,7 +1,12 @@
+#include <define.hh>
 #include <scene.hh>
 #include <triangle.hh>
 
 #include <queue>
+
+#ifdef DEBUG_OUT
+#include <iostream>
+#endif
 
 namespace Canyon {
 	void Scene::load(std::istream& fin) {
@@ -20,8 +25,8 @@ namespace Canyon {
 			Ray r(rays.front());
 			rays.pop();
 			Point3 p(ERROR_POINT);
-			Object* res_obj;
-			for (std::vector<Object>::iterator it = this->triangles.begin(); it != this->triangles.end(); ++ it) {
+			Triangle* res_obj;
+			for (std::vector<Triangle>::iterator it = this->triangles.begin(); it != this->triangles.end(); ++ it) {
 				Point3 q(it->rayCrossPoint(r));
 				if (!q.isNaN()) {
 					if (p.isNaN() || sgn((q - p) * (q - r.p)) < 0) {
@@ -30,9 +35,18 @@ namespace Canyon {
 					}
 				}
 			}
+#ifdef DEBUG_OUT
+			if (res_obj->col.isSource()) {
+				std::cerr << "Light! " << res_obj->a << std::endl;
+			}
+			std::cerr << "Cross! " << p << std::endl;
+#endif
 			if (!p.isNaN()) {
 				if (res_obj->col.isSource()) {
 					result = result + r.c * res_obj->col;
+#ifdef DEBUG_OUT
+					std::cerr << "Light! " << result << std::endl;
+#endif
 				} else {
 					std::vector<Ray> out_rays(res_obj->rayCrossOut(r));
 					for (std::vector<Ray>::iterator out_ray = out_rays.begin(); out_ray != out_rays.end(); ++ out_ray) {

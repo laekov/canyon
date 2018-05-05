@@ -2,6 +2,8 @@
 #define Point3_HH
 #include <double.hh>
 #include <istream>
+#include <ostream>
+#include <math.h>
 
 namespace Canyon {
 	class Point3 {
@@ -12,7 +14,7 @@ namespace Canyon {
 			double len();
 			Point3 unify();
 			inline bool isNaN() {
-				return x == NaN || y == NaN || z == NaN;
+				return !(isfinite(x) && isfinite(y) && isfinite(z));
 			}
 	};
 
@@ -23,8 +25,9 @@ namespace Canyon {
 	Point3 operator %(const Point3& a, const Point3& b);
 	bool operator ==(const Point3& a, const Point3& b);
 	std::istream& operator >>(std::istream&, Point3&);
+	std::ostream& operator <<(std::ostream&, Point3&);
 
-	const Point3 ERROR_POINT(NaN, NaN, NaN);
+	const Point3 ERROR_POINT(NAN, NAN, NAN);
 };
 
 #endif
