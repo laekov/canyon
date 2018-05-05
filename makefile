@@ -3,12 +3,17 @@ headers = $(wildcard headers/*.hh)
 objects = $(headers:headers/%.hh=obj/%.o)
 sources = $(headers:headers/%.hh=src/%.cc)
 testsrc = $(wildcard test/*.cc)
+cvopt := $(shell pkg-config --libs opencv --cflags) -mmacosx-version-min=10.8 
+
 tests = $(testsrc:test/%.cc=bin/%)
 
 default : mkdir $(objects) bin/main
 
 bin/% : src/%.cc $(objects)
-	$(cc) $< $(objects) -o $@
+	$(cc) $(cvopt) $< $(objects) -o $@
+
+obj/camera.o : src/camera.cc headers/camera.hh $(headers)
+	$(cc) $(cvopt) -c $< -o $@
 
 obj/%.o : src/%.cc headers/%.hh  $(headers)
 	$(cc) -c $< -o $@

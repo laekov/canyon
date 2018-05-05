@@ -39,7 +39,7 @@ namespace Canyon {
 		return Point3(a.y * b.z - a.z * b.y, a.z * b.x - a.x * b.z, a.x * b.y - a.y * b.x);
 	}
 
-	std::istream& operator<<(std::istream& fin, Point3& p) {
+	std::istream& operator >>(std::istream& fin, Point3& p) {
 		return fin >> p.x >> p.y >> p.z;
 	}
 

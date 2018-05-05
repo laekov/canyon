@@ -9,6 +9,9 @@ namespace Canyon {
 		return fin;
 	}
 
+	Colors operator +(const Colors& a, const Colors& b) {
+		return Colors(a.r + b.r, a.g + b.g, a.b + b.b);
+	}
 	Colors operator *(const Colors& a, const Colors& b) {
 		return Colors(a.r * b.r, a.g * b.g, a.b * b.b);
 	}

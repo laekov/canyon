@@ -22,6 +22,7 @@ namespace Canyon {
 	Point3 operator *(const Point3& a, const double& b);
 	Point3 operator %(const Point3& a, const Point3& b);
 	bool operator ==(const Point3& a, const Point3& b);
+	std::istream& operator >>(std::istream&, Point3&);
 
 	const Point3 ERROR_POINT(NaN, NaN, NaN);
 };

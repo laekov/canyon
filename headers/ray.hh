@@ -4,7 +4,6 @@
 
 #include "point3.hh"
 #include "vector.hh"
-#include "triangle.hh"
 #include "colors.hh"
 
 namespace Canyon {
@@ -20,7 +19,5 @@ namespace Canyon {
 			}
 	};
 
-	std::vector<Ray> rayShootOnTriangle(Ray, Triangle);
-	Vector reflectDirection(struct Plane, Vector);
 };
 #endif
