@@ -8,7 +8,6 @@
 #include "colors.hh"
 
 namespace Canyon {
-	const double ray_visible_thres = 1e-3;
 	class Ray {
 		public:
 			Point3 p;
@@ -22,5 +21,6 @@ namespace Canyon {
 	};
 
 	std::vector<Ray> rayShootOnTriangle(Ray, Triangle);
+	Vector reflectDirection(struct Plane, Vector);
 };
 #endif

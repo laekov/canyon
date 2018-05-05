@@ -11,7 +11,9 @@ namespace Canyon {
 			Point3(const Point3& p_): x(p_.x), y(p_.y), z(p_.z) {}
 			double len();
 			Point3 unify();
-			friend std::istream& operator <<(std::istream&, Point3&);
+			inline bool isNaN() {
+				return x == NaN || y == NaN || z == NaN;
+			}
 	};
 
 	Point3 operator +(const Point3& a, const Point3& b);
@@ -19,6 +21,7 @@ namespace Canyon {
 	double operator *(const Point3& a, const Point3& b);
 	Point3 operator *(const Point3& a, const double& b);
 	Point3 operator %(const Point3& a, const Point3& b);
+	bool operator ==(const Point3& a, const Point3& b);
 
 	const Point3 ERROR_POINT(NaN, NaN, NaN);
 };

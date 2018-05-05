@@ -42,4 +42,8 @@ namespace Canyon {
 	std::istream& operator<<(std::istream& fin, Point3& p) {
 		return fin >> p.x >> p.y >> p.z;
 	}
+
+	bool operator ==(const Point3& a, const Point3& b) {
+		return !sgn(a.x - b.x) && !sgn(a.y - b.y) && !sgn(a.z - b.z);
+	}
 };
