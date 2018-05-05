@@ -16,7 +16,9 @@ namespace Canyon {
 			~Camera() {
 				if (this->canvas) {
 					for (int i = 0; i < this->height; ++ i) {
-						delete [] this->canvas[i];
+						if (this->canvas[i]) {
+							delete [] this->canvas[i];
+						}
 					}
 					delete [] this->canvas;
 				}

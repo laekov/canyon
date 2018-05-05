@@ -28,7 +28,7 @@ namespace Canyon {
 		}
 		for (int i = 0; i < this->height; ++ i) {
 			for (int j = 0; j < this->width; ++ j) {
-				this->canvas[i][j] = scene.getRayResult(Ray(eye, vb + vx * i + vy * j - eye));
+				this->canvas[i][j] = scene.getRayResult(Ray(eye, vb + vx * ((double)i / (this->height - 1)) + vy * ((double)j / (this->width - 1)) - eye));
 			}
 #ifdef DEBUG_OUT
 			std::cerr << "Row " << i << " of " << this->height << " rendered\n";
