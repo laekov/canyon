@@ -6,6 +6,7 @@
 
 namespace Canyon {
 	const double color_visible_thres = 1e-5;
+
 	class Colors {
 		public:
 			double r, g, b;

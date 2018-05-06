@@ -29,6 +29,18 @@ namespace Canyon {
 		for (int i = 0; i < this->height; ++ i) {
 			this->canvas[i] = new Colors[this->width];
 		}
+#if FALSE
+// #ifdef DEBUG_OUT
+		Ray trace_ray(eye, vb + vx * 0.0 - eye);
+		trace_ray.c = Colors(1, 1, 1);
+		Colors col = scene.getRayResult(trace_ray);
+		std::cerr << col << std::endl;
+		trace_ray = Ray(eye, vb + vx * 0.5 - eye);
+		trace_ray.c = Colors(1, 1, 1);
+		col = scene.getRayResult(trace_ray);
+		std::cerr << col << std::endl;
+		return 0;
+#endif
 		for (int i = 0; i < this->height; ++ i) {
 			for (int j = 0; j < this->width; ++ j) {
 				Ray trace_ray(eye, vb + vy * ((double)i / (this->height - 1)) + vx * ((double)j / (this->width - 1)) - eye);
@@ -39,6 +51,11 @@ namespace Canyon {
 				std::cerr << clrs << i << "/" << this->height << ", " << j << "/" << this->width << "\tRendered       ";
 #endif
 			}
+#ifdef DEBUG_OUT
+			if (((i + 1) & 0x7) == 0) {
+				this->save("tmp.png");
+			}
+#endif
 		}
 #ifdef DEBUG_OUT
 		std::cerr << "Render down\n";

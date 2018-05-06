@@ -2,7 +2,7 @@ def ptr2str(p):
     return '%d %d %d' % (p[0], p[1], p[2])
 
 def face2str(a, b, c, d, r, g, bl):
-    smooth = 0.001
+    smooth = .0001
     return '\n'.join([ '%s %s %s %d %d %d %f' % ( ptr2str(a), ptr2str(b), ptr2str(c), r, g, bl, smooth),
         '%s %s %s %d %d %d %f' % ( ptr2str(d), ptr2str(b), ptr2str(c), r, g, bl, smooth) ])
 
@@ -39,7 +39,14 @@ with open('data/faces.mypoints', 'w') as f:
         facestrs.append(face2str(pb[0], pb[1], pb[2], pb[3], r, g, b))
     if True:
         facestrs.append(face2str(
-            #(40, 199, 40), (30, 199, 40), (40, 199, 30), (30, 199, 30), 256, 256, 256))
-            (10, 20, 98), (10, 180, 98), (90, 20, 98), (90, 180, 98), 256, 256, 256))
+            (10, 20, 98), (10, 80, 98), (20, 20, 98), (20, 80, 98), 256, 256, 256))
+        facestrs.append(face2str(
+            (10, 120, 98), (10, 180, 98), (20, 120, 98), (20, 180, 98), 256, 256, 256))
+        facestrs.append(face2str(
+            (80, 20, 98), (80, 80, 98), (90, 20, 98), (90, 80, 98), 256, 256, 256))
+        facestrs.append(face2str(
+            (80, 120, 98), (80, 180, 98), (90, 120, 98), (90, 180, 98), 256, 256, 256))
+        #facestrs.append(face2str(
+            #(10, 120, 98), (20, 130, 88), (10, 130, 98), (20, 120, 88), 30, 1, 1))
     f.write('\n'.join(facestrs))
 

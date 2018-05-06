@@ -40,7 +40,6 @@ namespace Canyon {
 				if (res_obj->col.isSource()) {
 					result = result + r.c * res_obj->col;
 				} else {
-					double rat_d(fabs(cosarc(Plane(*res_obj).n, r.d)));
 					std::vector<Ray> out_rays(res_obj->rayCrossOut(r));
 					for (std::vector<Ray>::iterator out_ray = out_rays.begin(); out_ray != out_rays.end(); ++ out_ray) {
 						if (out_ray->c.visible()) {

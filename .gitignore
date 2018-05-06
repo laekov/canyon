@@ -4,3 +4,5 @@
 bin
 obj
 *.mypoints
+*.png
+.DS_Store

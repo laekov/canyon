@@ -56,8 +56,8 @@ namespace Canyon {
 	}
 
 	Point3 vertical(const Point3& p) {
-		if (!sgn(p.z)) {
-			return Point3(0, 0, 1);
+		if (!sgn(p.x) && !sgn(p.y)) {
+			return Point3(1, 0, 0);
 		} else {
 			return Point3(p.y, -p.x, 0);
 		}
