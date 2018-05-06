@@ -12,6 +12,6 @@ namespace Canyon {
 	}
 
 	double randf() {
-		return rand() / (double)0x7fffffff;
+		return (rand() & 0xffffff) / (double)0xffffff;
 	}
 };

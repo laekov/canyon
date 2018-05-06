@@ -31,12 +31,11 @@ namespace Canyon {
 				Ray trace_ray(eye, vb + vy * ((double)i / (this->height - 1)) + vx * ((double)j / (this->width - 1)) - eye);
 				trace_ray.c = Colors(1, 1, 1);
 				this->canvas[i][j] = scene.getRayResult(trace_ray);
-			}
 #ifdef DEBUG_OUT
-			if ((i & 0xf) == 0) {
-				std::cerr << "Row " << i << " of " << this->height << " rendered\n";
-			}
+				static const char clrs[] = { 8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,0};
+				std::cerr << clrs << i << "/" << this->height << ", " << j << "/" << this->width << "\tRendered       ";
 #endif
+			}
 		}
 #ifdef DEBUG_OUT
 		std::cerr << "Render down\n";

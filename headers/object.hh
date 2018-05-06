@@ -14,5 +14,6 @@ namespace Canyon {
 			virtual Point3 rayCrossPoint(Ray);
 			virtual std::vector<Ray> rayCrossOut(Ray);
 	};
+
 };
 #endif

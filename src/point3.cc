@@ -54,4 +54,12 @@ namespace Canyon {
 	double cosarc(const Point3& a, const Point3& b) {
 		return a * b / a.len() / b.len();
 	}
+
+	Point3 vertical(const Point3& p) {
+		if (!sgn(p.z)) {
+			return Point3(0, 0, 1);
+		} else {
+			return Point3(p.y, -p.x, 0);
+		}
+	}
 };

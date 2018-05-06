@@ -5,11 +5,13 @@
 #include <ostream>
 
 namespace Canyon {
-	const double color_visible_thres = 1e-2;
+	const double color_visible_thres = 1e-7;
 	class Colors {
 		public:
 			double r, g, b;
-			Colors(double r_ = 0, double g_ = 0, double b_ = 0): r(r_), g(g_), b(b_) {}
+			Colors(): r(0), g(0), b(0) {}
+			Colors(double all_): r(all_), g(all_), b(all_) {}
+			Colors(double r_, double g_, double b_): r(r_), g(g_), b(b_) {}
 			Colors(const Colors& c_): r(c_.r), g(c_.g), b(c_.b) {}
 			inline bool visible() {
 				return r > color_visible_thres || 

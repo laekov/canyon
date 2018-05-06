@@ -27,6 +27,7 @@ namespace Canyon {
 	double cosarc(const Point3& a, const Point3& b);
 	std::istream& operator >>(std::istream&, Point3&);
 	std::ostream& operator <<(std::ostream&, const Point3&);
+	Point3 vertical(const Point3&);
 
 	const Point3 ERROR_POINT(NAN, NAN, NAN);
 };

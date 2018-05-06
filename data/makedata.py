@@ -2,8 +2,9 @@ def ptr2str(p):
     return '%d %d %d' % (p[0], p[1], p[2])
 
 def face2str(a, b, c, d, r, g, bl):
-    return '\n'.join([ '%s %s %s %d %d %d 0.4' % ( ptr2str(a), ptr2str(b), ptr2str(c), r, g, bl),
-        '%s %s %s %d %d %d 0.4' % ( ptr2str(d), ptr2str(b), ptr2str(c), r, g, bl) ])
+    smooth = 0.001
+    return '\n'.join([ '%s %s %s %d %d %d %f' % ( ptr2str(a), ptr2str(b), ptr2str(c), r, g, bl, smooth),
+        '%s %s %s %d %d %d %f' % ( ptr2str(d), ptr2str(b), ptr2str(c), r, g, bl, smooth) ])
 
 with open('data/faces.mypoints', 'w') as f:
     sz = [ 100, 200, 100 ]
@@ -27,7 +28,7 @@ with open('data/faces.mypoints', 'w') as f:
         elif axe == 1: 
             (r, g, b) = (100, 100, 10)
         else:
-            (r, g, b) = (55, 55, 55)
+            (r, g, b) = (200, 200, 105)
         facestrs.append(face2str(pa[0], pa[1], pa[2], pa[3], r, g, b))
         if axe == 0: 
             (r, g, b) = (100, 100, 200)

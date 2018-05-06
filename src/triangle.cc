@@ -9,6 +9,8 @@
 #endif
 
 namespace Canyon {
+	const int diffuse_reflect_count = 700;
+
 	bool Triangle::pointIn(Point3 p) {
 		Vector a(this->a - p);
 		Vector b(this->b - p);
@@ -35,10 +37,30 @@ namespace Canyon {
 		return cross_point;
 	}
 
+	double colorStrength(Colors x) {
+		return Point3(x.r, x.g, x.b).len();
+	}
+
 	std::vector<Ray> Triangle::rayCrossOut(Ray r) {
 		std::vector<Ray> out_rays;
 		Point3 cp(this->rayCrossPoint(r));
-		out_rays.push_back(Ray(cp, this->reflectDirection(r.d)));
+		Vector refd(this->reflectDirection(r.d));
+		out_rays.push_back(Ray(cp, refd, r.c * this->col * Colors(this->smooth)));
+		if (this->smooth < 1.) {
+			refd = refd.unify();
+			Vector u0(vertical(refd));
+			Vector u1(refd % u0);
+			int e(diffuse_reflect_count * colorStrength(r.c));
+			double erat(log(e + 3) / e);
+			for (int i = 0; i < e; ++ i) {
+				double theta(randf() * PI * .5);
+				double alpha(randf() * PI * 2);
+				Vector u(u0 * cos(alpha) + u1 * sin(alpha));
+				Vector d(refd * cos(theta) + u * sin(theta));
+				double weaken_rat((1. - this->smooth) * erat * cos(theta));
+				out_rays.push_back(Ray(cp, d, r.c * this->col * Colors(weaken_rat)));
+			}
+		}
 		return out_rays;
 	}
 
