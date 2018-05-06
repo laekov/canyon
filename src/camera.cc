@@ -58,12 +58,12 @@ namespace Canyon {
 
 	int Camera::save(const char* filename) {
 		std::vector<uchar> img;
-		for (int i = 0; i < this->height; ++ i) {
+		for (int i = this->height - 1; i >= 0; -- i) {
 			for (int j = 0; j < this->width; ++ j) {
 				img.push_back(f2uchar(this->canvas[i][j].r));
 				img.push_back(f2uchar(this->canvas[i][j].g));
 				img.push_back(f2uchar(this->canvas[i][j].b));
-				img.push_back(0);
+				img.push_back(255);
 			}
 		}
 		lodepng::encode(filename, img, this->width, this->height);
