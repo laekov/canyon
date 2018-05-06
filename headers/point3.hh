@@ -14,7 +14,7 @@ namespace Canyon {
 			double len() const;
 			Point3 unify() const;
 			inline bool isNaN() {
-				return !(isfinite(x) && isfinite(y) && isfinite(z));
+				return !(std::isfinite(x) && std::isfinite(y) && std::isfinite(z));
 			}
 	};
 
