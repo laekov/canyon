@@ -1,20 +1,19 @@
-cc = g++ -g -Iheaders
-headers = $(wildcard headers/*.hh)
+cc = g++ --std=c++11 -g -Iheaders
+headers = $(wildcard headers/*.hh) 
 objects = $(headers:headers/%.hh=obj/%.o)
+libobjects = obj/lodepng.o
 sources = $(headers:headers/%.hh=src/%.cc)
 testsrc = $(wildcard test/*.cc)
-# cvopt := $(shell pkg-config --libs opencv --cflags) -mmacosx-version-min=10.9
-cvopt = 
 
 tests = $(testsrc:test/%.cc=bin/%)
 
 default : mkdir $(objects) bin/main
 
-bin/% : src/%.cc $(objects)
-	$(cc) $(cvopt) $< $(objects) -o $@
+bin/% : src/%.cc $(objects) $(libobjects)
+	$(cc) $< $(objects) $(libobjects) -o $@
 
-obj/camera.o : src/camera.cc headers/camera.hh $(headers)
-	$(cc) $(cvopt) -c $< -o $@
+obj/lodepng.o : lodepng/lodepng.cpp lodepng/lodepng.h
+	$(cc) -c $< -o $@
 
 obj/%.o : src/%.cc headers/%.hh  $(headers)
 	$(cc) -c $< -o $@

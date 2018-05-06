@@ -9,13 +9,10 @@
 #include <camera.hh>
 #include <ray.hh>
 
+#include <lodepng.h>
 
 #ifdef DEBUG_OUT
 #include <iostream>
-#endif
-
-#ifndef NO_OPENCV
-#include <opencv2/opencv.hpp>
 #endif
 
 namespace Canyon {
@@ -60,42 +57,15 @@ namespace Canyon {
 	}
 
 	int Camera::save(const char* filename) {
-#ifdef NO_OPENCV
-		std::string pnmname(filename);
-		pnmname += ".pnm";
-		std::ofstream fou(pnmname);
-		fou << "P3\n" << this->width << " " << this->height << "\n255\n";
+		std::vector<uchar> img;
 		for (int i = 0; i < this->height; ++ i) {
 			for (int j = 0; j < this->width; ++ j) {
-				fou << (int)f2uchar(this->canvas[i][j].r) << ' ' 
-					<< (int)f2uchar(this->canvas[i][j].g) << ' '
-					<< (int)f2uchar(this->canvas[i][j].b) << '\n';
+				img.push_back(f2uchar(this->canvas[i][j].r));
+				img.push_back(f2uchar(this->canvas[i][j].g));
+				img.push_back(f2uchar(this->canvas[i][j].b));
+				img.push_back(0);
 			}
 		}
-		fou.close();
-		system(("pnmtopng " + pnmname + " >" + std::string(filename)).c_str());
-		system(("rm " + pnmname).c_str());
-#else
-		cv::Mat img(this->height, this->width, CV_8UC(4));
-		cv::Mat w;
-		w = img(cv::Range(0, this->height), cv::Range(0, this->width));
-		for (int x = 0; x < this->height; ++ x) {
-			for (int y = 0; y < this->width; ++ y) {
-				w(cv::Range(this->height - x - 1, this->height - x), cv::Range(this->width - y - 1, this->width - y)) = cv::Scalar(
-						f2uchar(this->canvas[x][y].r), 
-						f2uchar(this->canvas[x][y].g), 
-						f2uchar(this->canvas[x][y].b), 0);
-			}
-		}
-		std::vector<int> compression_params;
-		compression_params.push_back(cv::IMWRITE_PNG_COMPRESSION);
-		compression_params.push_back(9);
-
-		/*cv::namedWindow("Display img", cv::WINDOW_AUTOSIZE);
-		cv::imshow("Display img", img);
-		cv::waitKey(0);*/
-
-		cv::imwrite(filename, img, compression_params);
-#endif
+		lodepng::encode(filename, img, this->width, this->height);
 	}
 };
