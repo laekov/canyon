@@ -16,6 +16,6 @@ int main() {
 	cam.vy = Canyon::Vector(0, 0, 1.6);
 	// cam.render(scene, 800, 640);
 	cam.render(scene, 200, 160);
-	cam.save("QAQ");
+	cam.save("qaq.png");
 }
 

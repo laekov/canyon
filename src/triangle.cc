@@ -9,7 +9,7 @@
 #endif
 
 namespace Canyon {
-	const int diffuse_reflect_count = 700;
+	const int diffuse_reflect_count = 500;
 
 	bool Triangle::pointIn(Point3 p) {
 		Vector a(this->a - p);

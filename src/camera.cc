@@ -1,4 +1,6 @@
-#include <opencv2/opencv.hpp>
+#include <fstream>
+#include <string>
+#include <cstdlib>
 #include <cmath>
 
 #include <define.hh>
@@ -10,6 +12,10 @@
 
 #ifdef DEBUG_OUT
 #include <iostream>
+#endif
+
+#ifndef NO_OPENCV
+#include <opencv2/opencv.hpp>
 #endif
 
 namespace Canyon {
@@ -43,6 +49,8 @@ namespace Canyon {
 		return 0;
 	}
 
+	typedef unsigned char uchar;
+
 	inline uchar f2uchar(double x) {
 		if (x > 1.) {
 			return 255;
@@ -52,6 +60,22 @@ namespace Canyon {
 	}
 
 	int Camera::save(const char* filename) {
+#ifdef NO_OPENCV
+		std::string pnmname(filename);
+		pnmname += ".pnm";
+		std::ofstream fou(pnmname);
+		fou << "P3\n" << this->width << " " << this->height << "\n255\n";
+		for (int i = 0; i < this->height; ++ i) {
+			for (int j = 0; j < this->width; ++ j) {
+				fou << (int)f2uchar(this->canvas[i][j].r) << ' ' 
+					<< (int)f2uchar(this->canvas[i][j].g) << ' '
+					<< (int)f2uchar(this->canvas[i][j].b) << '\n';
+			}
+		}
+		fou.close();
+		system(("pnmtopng " + pnmname + " >" + std::string(filename)).c_str());
+		system(("rm " + pnmname).c_str());
+#else
 		cv::Mat img(this->height, this->width, CV_8UC(4));
 		cv::Mat w;
 		w = img(cv::Range(0, this->height), cv::Range(0, this->width));
@@ -67,10 +91,11 @@ namespace Canyon {
 		compression_params.push_back(cv::IMWRITE_PNG_COMPRESSION);
 		compression_params.push_back(9);
 
-		cv::namedWindow("Display img", cv::WINDOW_AUTOSIZE);
+		/*cv::namedWindow("Display img", cv::WINDOW_AUTOSIZE);
 		cv::imshow("Display img", img);
-		cv::waitKey(0);
+		cv::waitKey(0);*/
 
-		// cv::imwrite(filename, img, compression_params);
+		cv::imwrite(filename, img, compression_params);
+#endif
 	}
 };

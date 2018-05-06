@@ -3,7 +3,8 @@ headers = $(wildcard headers/*.hh)
 objects = $(headers:headers/%.hh=obj/%.o)
 sources = $(headers:headers/%.hh=src/%.cc)
 testsrc = $(wildcard test/*.cc)
-cvopt := $(shell pkg-config --libs opencv --cflags) -mmacosx-version-min=10.8 
+# cvopt := $(shell pkg-config --libs opencv --cflags) -mmacosx-version-min=10.9
+cvopt = 
 
 tests = $(testsrc:test/%.cc=bin/%)
 

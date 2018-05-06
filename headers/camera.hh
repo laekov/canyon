@@ -2,6 +2,7 @@
 #define CAMERA_HH
 
 #include <point3.hh>
+#include <colors.hh>
 #include <vector.hh>
 
 namespace Canyon {
@@ -9,7 +10,7 @@ namespace Canyon {
 		public:
 			Point3 eye, vb;
 			Vector vx, vy;
-			struct Colors** canvas;
+			Colors** canvas;
 			int height, width;
 
 			Camera(): canvas(0) {}
