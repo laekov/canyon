@@ -16,7 +16,7 @@ namespace Canyon {
 		Vector u(a % b);
 		Vector v(b % c);
 		Vector w(c % a);
-		return sgn(u * v) == sgn(v * w);
+		return sgn(u * v) > 0 && sgn(v * w) > 0;
 	}
 	
 	Point3 Triangle::rayCrossPoint(Ray r) {
@@ -46,6 +46,6 @@ namespace Canyon {
 		Plane p(*this);
 		Vector uf(p.n.unify());
 		double len_proj(uf * v);
-		return v + uf * (len_proj * 2.);
+		return v - uf * (len_proj * 2.);
 	}
 };

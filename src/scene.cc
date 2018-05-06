@@ -1,6 +1,7 @@
 #include <define.hh>
 #include <scene.hh>
 #include <triangle.hh>
+#include <plane.hh>
 
 #include <queue>
 
@@ -35,23 +36,16 @@ namespace Canyon {
 					}
 				}
 			}
-#ifdef DEBUG_OUT
-			if (res_obj->col.isSource()) {
-				std::cerr << "Light! " << res_obj->a << std::endl;
-			}
-			std::cerr << "Cross! " << p << std::endl;
-#endif
 			if (!p.isNaN()) {
 				if (res_obj->col.isSource()) {
 					result = result + r.c * res_obj->col;
-#ifdef DEBUG_OUT
-					std::cerr << "Light! " << result << std::endl;
-#endif
 				} else {
+					double rat_d(fabs(cosarc(Plane(*res_obj).n, r.d)));
 					std::vector<Ray> out_rays(res_obj->rayCrossOut(r));
 					for (std::vector<Ray>::iterator out_ray = out_rays.begin(); out_ray != out_rays.end(); ++ out_ray) {
 						out_ray->c = r.c;
 						out_ray->darker(res_obj->col);
+						// out_ray->darker(Colors(rat_d, rat_d, rat_d));
 						if (out_ray->c.visible()) {
 							rays.push(*out_ray);
 						}

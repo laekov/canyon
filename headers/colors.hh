@@ -5,7 +5,7 @@
 #include <ostream>
 
 namespace Canyon {
-	const double color_visible_thres = 1e-3;
+	const double color_visible_thres = 1e-2;
 	class Colors {
 		public:
 			double r, g, b;
@@ -22,7 +22,7 @@ namespace Canyon {
 	};
 
 	std::istream& operator >>(std::istream& fin, Colors& c);
-	std::ostream& operator <<(std::ostream& fou, Colors& c);
+	std::ostream& operator <<(std::ostream& fou, const Colors& c);
 	Colors operator *(const Colors& a, const Colors& b);
 	Colors operator +(const Colors& a, const Colors& b);
 };

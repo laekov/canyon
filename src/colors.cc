@@ -8,7 +8,7 @@ namespace Canyon {
 		c.b /= 256;
 		return fin;
 	}
-	std::ostream& operator <<(std::ostream& fou, Colors& c) {
+	std::ostream& operator <<(std::ostream& fou, const Colors& c) {
 		return fou << "RGB(" << c.r << ", " << c.g << ", " << c.b << ")";
 	}
 

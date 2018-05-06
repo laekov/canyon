@@ -6,6 +6,7 @@ namespace Canyon {
 
 	int sgn(const double& x);
 	double sqr(const double& x);
+	double randf();
 };
 
 #endif
