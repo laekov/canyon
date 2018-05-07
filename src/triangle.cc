@@ -9,8 +9,8 @@
 #endif
 
 namespace Canyon {
-	const double alpha_count = 0.3;
-	const double theta_count = 0.4;
+	const double alpha_count = 0.2;
+	const double theta_count = 0.3;
 
 	bool Triangle::pointIn(Point3 p) {
 		Vector a(this->a - p);
