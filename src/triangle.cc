@@ -57,12 +57,6 @@ namespace Canyon {
 			double difc(sqrt(colorStrength(r.c) / color_visible_thres));
 			int ea(alpha_count * difc);
 			int et(theta_count * difc);
-			if (ea < 2) {
-				ea = 2;
-			}
-			if (et < 2) {
-				et = 2;
-			}
 			double erat(log(ea * et + 3) / (ea * et));
 			double cea(1. / (ea + 1));
 			double cet(1. / et);

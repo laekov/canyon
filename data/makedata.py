@@ -26,9 +26,9 @@ with open('data/faces.mypoints', 'w') as f:
         if axe == 0: 
             (r, g, b) = (200, 100, 100)
         elif axe == 1: 
-            (r, g, b) = (100, 100, 10)
+            (r, g, b) = (256, 256, 256)
         else:
-            (r, g, b) = (200, 200, 105)
+            (r, g, b) = (100, 100, 100)
         facestrs.append(face2str(pa[0], pa[1], pa[2], pa[3], r, g, b))
         if axe == 0: 
             (r, g, b) = (100, 100, 200)
@@ -39,13 +39,9 @@ with open('data/faces.mypoints', 'w') as f:
         facestrs.append(face2str(pb[0], pb[1], pb[2], pb[3], r, g, b))
     if True:
         facestrs.append(face2str(
-            (10, 20, 98), (10, 80, 98), (20, 20, 98), (20, 80, 98), 256, 256, 256))
+            (10, 20, 98), (10, 80, 98), (48, 20, 98), (48, 80, 98), 256, 256, 256))
         facestrs.append(face2str(
-            (10, 120, 98), (10, 180, 98), (20, 120, 98), (20, 180, 98), 256, 256, 256))
-        facestrs.append(face2str(
-            (80, 20, 98), (80, 80, 98), (90, 20, 98), (90, 80, 98), 256, 256, 256))
-        facestrs.append(face2str(
-            (80, 120, 98), (80, 180, 98), (90, 120, 98), (90, 180, 98), 256, 256, 256))
+            (52, 120, 98), (52, 180, 98), (90, 120, 98), (90, 180, 98), 256, 256, 256))
         #facestrs.append(face2str(
             #(10, 120, 98), (20, 130, 88), (10, 130, 98), (20, 120, 88), 30, 1, 1))
     f.write('\n'.join(facestrs))

@@ -5,7 +5,7 @@
 #include <ostream>
 
 namespace Canyon {
-	const double color_visible_thres = 1e-5;
+	const double color_visible_thres = 1e-4;
 
 	class Colors {
 		public:
