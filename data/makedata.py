@@ -65,7 +65,7 @@ def main():
                                 (256, ) * 3))
     facestrs.append(ball((20, 90, 32), 30, (255, 255, 255), smooth=0.999,
                     alpha=0.999, n=1.3))
-    facestrs.append(ball((60, 180, 45), 40, (225, 120, 225), smooth=0, 
+    facestrs.append(ball((40, 180, 45), 40, (225, 120, 225), smooth=0, 
                     alpha=0, n=1))
     return facestrs
 
