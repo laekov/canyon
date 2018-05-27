@@ -2,7 +2,7 @@
 #include <vector.hh>
 
 #include <assert.h>
-
+#include <iostream>
 
 namespace Canyon {
 	Point3 Ball::rayCrossPoint(Ray l) {
@@ -40,25 +40,27 @@ namespace Canyon {
 					stheta /= this->n;
 				}
 				if (stheta < 1.) {
-					double theta(asin(theta));
+					double theta(asin(stheta));
 					Vector dn(n *(n * ray.d));
 					Vector dvert(ray.d - dn);
 					Vector refrac_direction(dn.unify() +
 							                dvert.unify() * tan(theta));
-					out_rays.push_back(Ray(p, refrac_direction, 
-								           ray.c * this->col * 
-								           Colors(this->smooth) *
-									       Colors(this->alpha)));
+					Ray refrac(p, refrac_direction, 
+							   ray.c * this->col * 
+							   Colors(this->smooth) *
+							   Colors(this->alpha));
+					out_rays.push_back(refrac);
 				} else {
 					all_reflect = 1;
 				}
 			}
 			if (this->alpha < 1. || all_reflect) {
 				Vector reflect_direction(reflectDirection(ray.d, n));
-				out_rays.push_back(Ray(p, reflect_direction, ray.c * 
-							           this->col * Colors(this->smooth) *
-								       Colors(all_reflect ? 1. :
-									   1. - this->alpha)));
+				Ray refl(p, reflect_direction, ray.c * 
+				    	 this->col * Colors(this->smooth) *
+						 Colors(all_reflect ? 1. :
+							    1. - this->alpha));
+				out_rays.push_back(refl);
 			}
 			this->getDiffuseRay(ray, out_rays, n, p);
 		}
