@@ -38,7 +38,7 @@ namespace Canyon {
 	std::vector<Ray> Triangle::rayCrossOut(Ray r) {
 		std::vector<Ray> out_rays;
 		Point3 cp(this->rayCrossPoint(r));
-		Vector refd(reflectDirection(r.d, this->n));
+		Vector refd(reflectDirection(r.d, Plane(*this).n));
 		Vector nf(Plane(*this).n.unify());
 		if (sgn(nf * refd) < 0) {
 			nf = nf * -1;

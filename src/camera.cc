@@ -1,5 +1,6 @@
 #include <fstream>
 #include <string>
+#include <algorithm>
 #include <cstdlib>
 #include <cmath>
 
@@ -35,13 +36,20 @@ namespace Canyon {
 		trace_ray.c = Colors(1, 1, 1);
 		Colors col = scene.getRayResult(trace_ray);
 		std::cerr << col << std::endl;
+		return 0;
 		trace_ray = Ray(eye, vb + vx * 0.5 - eye);
 		trace_ray.c = Colors(1, 1, 1);
 		col = scene.getRayResult(trace_ray);
 		std::cerr << col << std::endl;
 		return 0;
 #endif
+		static int order[2333];
 		for (int i = 0; i < this->height; ++ i) {
+			order[i] = i;
+		}
+		std::random_shuffle(order, order + this->height);
+		for (int ic = 0; ic < this->height; ++ ic) {
+			int i(order[ic]);
 #pragma omp parallel for
 			for (int j = 0; j < this->width; ++ j) {
 				Ray trace_ray(eye, vb + vy * ((double)i / (this->height - 1)) + vx * ((double)j / (this->width - 1)) - eye);

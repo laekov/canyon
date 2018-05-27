@@ -55,9 +55,9 @@ namespace Canyon {
 					result = result + r.c * res_obj->col;
 				} else {
 					std::vector<Ray> out_rays(res_obj->rayCrossOut(r));
-					for (std::vector<Ray>::iterator out_ray = out_rays.begin(); out_ray != out_rays.end(); ++ out_ray) {
-						if (out_ray->c.visible()) {
-							rays.push(*out_ray);
+					for (auto out_ray: out_rays) {
+						if (out_ray.c.visible()) {
+							rays.push(out_ray);
 						}
 					}
 				}

@@ -1,6 +1,8 @@
 #include <ball.hh>
 #include <vector.hh>
 
+#include <assert.h>
+
 
 namespace Canyon {
 	Point3 Ball::rayCrossPoint(Ray l) {
@@ -24,30 +26,41 @@ namespace Canyon {
 		return d1 < d2 ? p1 : p2;
 	}
 
-	std::vector<Ray> Ball::rayCrossOut(Ray r) {
+	std::vector<Ray> Ball::rayCrossOut(Ray ray) {
 		std::vector<Ray> out_rays;
-		Point3 p(this->rayCrossPoint(r));
+		Point3 p(this->rayCrossPoint(ray));
 		if (!p.isNaN()) {
 			Vector n((p - this->c).unify());
-			Vector reflect_direction(reflectDirection(r.d, n));
-			out_rays.push_back(Ray(p, reflect_direction, r.c * this->col * 
-						           Colors(this->smooth) *
-								   Colors(1. - this->alpha)));
-			Vector d_n_dir(n *(r.d * n));
-			Vector d_on_dir(r.d - d_on_dir);
-			if (this->pointIn(r.p)) {
-				d_on_dir = d_on_dir * this->n;
-			} else {
-				d_on_dir = d_on_dir * (1. / this->n);
+			bool all_reflect(0);
+			if (this->alpha > 0.) {
+				double stheta(sin(acos(n * ray.d.unify())));
+				if (this->pointIn(ray.p)) {
+					stheta *= this->n;
+				} else {
+					stheta /= this->n;
+				}
+				if (stheta < 1.) {
+					double theta(asin(theta));
+					Vector dn(n *(n * ray.d));
+					Vector dvert(ray.d - dn);
+					Vector refrac_direction(dn.unify() +
+							                dvert.unify() * tan(theta));
+					out_rays.push_back(Ray(p, refrac_direction, 
+								           ray.c * this->col * 
+								           Colors(this->smooth) *
+									       Colors(this->alpha)));
+				} else {
+					all_reflect = 1;
+				}
 			}
-			Vector refrac_direction(d_n_dir + d_on_dir);
-			out_rays.push_back(Ray(p, reflect_direction, r.c * this->col * 
-						           Colors(this->smooth) *
-								   Colors(1. - this->alpha)));
-			out_rays.push_back(Ray(p, refrac_direction, r.c * this->col * 
-						           Colors(this->smooth) *
-								   Colors(this->alpha)));
-			this->getDiffuseRay(r, out_rays, n, p);
+			if (this->alpha < 1. || all_reflect) {
+				Vector reflect_direction(reflectDirection(ray.d, n));
+				out_rays.push_back(Ray(p, reflect_direction, ray.c * 
+							           this->col * Colors(this->smooth) *
+								       Colors(all_reflect ? 1. :
+									   1. - this->alpha)));
+			}
+			this->getDiffuseRay(ray, out_rays, n, p);
 		}
 		return out_rays;
 	}

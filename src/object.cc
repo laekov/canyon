@@ -1,8 +1,8 @@
 #include <object.hh>
 
 namespace Canyon {
-	const double alpha_count = 0.2;
-	const double theta_count = 0.3;
+	const double alpha_count = .2;
+	const double theta_count = .3;
 
 	void Object::getDiffuseRay(Ray r, std::vector<Ray>& out_rays, Vector nf,
 			                   Point3 cp) {

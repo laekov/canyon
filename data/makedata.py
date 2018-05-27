@@ -12,8 +12,7 @@ def face2str(a, b, c, d, col, smooth=0):
 def ball(c, r, col, smooth=1, alpha=0, n=1):
     return 'ball %s %f %s %f %f %f' % (ptr2str(c), r, ptr2str(col), smooth,
                                        alpha, n)
-
-with open('data/faces.mypoints', 'w') as f:
+def main():
     sz = [ 100, 200, 100 ]
     facestrs = []
     for axe in range(0):
@@ -31,29 +30,47 @@ with open('data/faces.mypoints', 'w') as f:
                 q = [ sz[x] if x == axe else p[x] for x in range(3) ]
                 pb.append(q)
         if axe == 0: 
-            (r, g, b) = (200, 100, 100)
+            col = (200, 100, 100)
         elif axe == 1: 
-            (r, g, b) = (256, 256, 256)
+            col = None
         else:
-            (r, g, b) = (100, 100, 100)
-        facestrs.append(face2str(pa[0], pa[1], pa[2], pa[3], r, g, b))
+            col = (100, 100, 100)
+        if col is not None:
+            facestrs.append(face2str(pa[0], pa[1], pa[2], pa[3], col))
         if axe == 0: 
-            (r, g, b) = (100, 100, 200)
+            col = (100, 100, 200)
         elif axe == 1: 
-            (r, g, b) = (100, 200, 100)
+            col = (100, 200, 100)
         else:
-            (r, g, b) = (200, 200, 100)
-        facestrs.append(face2str(pb[0], pb[1], pb[2], pb[3], r, g, b))
+            col = (200, 200, 100)
+        if col is not None:
+            facestrs.append(face2str(pb[0], pb[1], pb[2], pb[3], col))
+    # Background
+    facestrs.append(face2str((-50, 140, 0), (40, 150, 0),
+                             (-50, 140, 100), (40, 150, 100),
+                             (255, 255, 0), smooth=0))
+    # Floor
     facestrs.append(face2str((-100, 0, 0), (300, 0, 0),
-                             (-100, 300, 0), (100, 300, 0),
-                             (60, ) * 3, smooth=0.01))
-    facestrs.append(face2str((0, 0, 0), (200, 0, 0),
-                             (0, 0, 200), (200, 0, 200),
-                             (512, ) * 3))
-    facestrs.append(face2str((10, 50, 100), (70, 50, 100),
-                             (10, 100, 100), (70, 100, 100),
-                             (512, ) * 3))
-    facestrs.append(ball((20, 20, 10), 10, (255, 255, 255), 0.9, 0.9, 1.3))
-    facestrs.append(ball((70, 80, 40), 20, (255, 255, 0), 0, 0, 1))
+                             (-100, 300, 0), (300, 300, 0),
+                             (90, ) * 3, smooth=0.00001))
+    # Top light
+    facestrs.append(face2str((10, 50, 100), (50, 50, 100),
+                             (10, 200, 100), (50, 200, 100),
+                             (256, ) * 3))
+    # Back light
+    back_light = False
+    if back_light:
+        facestrs.append(face2str((0, 0, 0), (100, 0, 0),
+                                (0, 0, 100), (100, 0, 100),
+                                (256, ) * 3))
+    facestrs.append(ball((20, 90, 32), 30, (255, 255, 255), smooth=0.999,
+                    alpha=0.999, n=1.3))
+    facestrs.append(ball((60, 180, 45), 40, (225, 120, 225), smooth=0, 
+                    alpha=0, n=1))
+    return facestrs
+
+
+with open('data/faces.mypoints', 'w') as f:
+    facestrs = main()
     f.write('\n'.join(facestrs))
 
