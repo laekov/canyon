@@ -62,7 +62,7 @@ namespace Canyon {
 #ifdef DEBUG_OUT
 			if (((i + 1) & 0x7) == 0) {
 				this->save("tmp.png");
-				std::cerr << i << " lines rendered, written to tmp.png\n";
+				std::cerr << ic << " lines rendered, written to tmp.png\n";
 			}
 #endif
 		}
