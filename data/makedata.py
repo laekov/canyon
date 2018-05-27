@@ -1,15 +1,22 @@
 def ptr2str(p):
     return '%d %d %d' % (p[0], p[1], p[2])
 
-def face2str(a, b, c, d, r, g, bl):
-    smooth = .0001
-    return '\n'.join([ '%s %s %s %d %d %d %f' % ( ptr2str(a), ptr2str(b), ptr2str(c), r, g, bl, smooth),
-        '%s %s %s %d %d %d %f' % ( ptr2str(d), ptr2str(b), ptr2str(c), r, g, bl, smooth) ])
+def face2str(a, b, c, d, col, smooth=0):
+    return '\n'.join(['triangle %s %s %s %s %f' %
+                      (ptr2str(a), ptr2str(b), ptr2str(c),
+                          ptr2str(col), smooth),
+                      'triangle %s %s %s %s %f' %
+                      (ptr2str(d), ptr2str(b), ptr2str(c),
+                          ptr2str(col), smooth)])
+
+def ball(c, r, col, smooth=1, alpha=0, n=1):
+    return 'ball %s %f %s %f %f %f' % (ptr2str(c), r, ptr2str(col), smooth,
+                                       alpha, n)
 
 with open('data/faces.mypoints', 'w') as f:
     sz = [ 100, 200, 100 ]
     facestrs = []
-    for axe in range(3):
+    for axe in range(0):
         pa = []
         pb = []
         for i in range(2):
@@ -37,14 +44,17 @@ with open('data/faces.mypoints', 'w') as f:
         else:
             (r, g, b) = (200, 200, 100)
         facestrs.append(face2str(pb[0], pb[1], pb[2], pb[3], r, g, b))
-    if True:
-        facestrs.append(face2str(
-            (10, 20, 98), (10, 80, 98), (48, 20, 98), (48, 80, 98), 256, 256, 256))
-        facestrs.append(face2str(
-            (10, 120, 98), (10, 180, 98), (48, 120, 98), (48, 180, 98), 256, 256, 256))
-        facestrs.append(face2str(
-            (80, 20, 98), (80, 180, 98), (90, 20, 98), (90, 180, 98), 256, 256, 256))
-        #facestrs.append(face2str(
-            #(10, 120, 98), (20, 130, 88), (10, 130, 98), (20, 120, 88), 30, 1, 1))
+    gr = 256
+    facestrs.append(face2str((-100, 0, 0), (300, 0, 0),
+                             (-100, 300, 0), (100, 300, 0),
+                             (gr, ) * 3, smooth=0.01))
+    facestrs.append(face2str((0, 0, 0), (200, 0, 0),
+                             (0, 0, 200), (200, 0, 200),
+                             (512, ) * 3))
+    facestrs.append(face2str((50, 50, 100), (70, 50, 100),
+                             (50, 100, 100), (70, 100, 100),
+                             (8192, ) * 3))
+    facestrs.append(ball((20, 120, 100), 10, (255, 255, 255), 0.9, 0.9, 1.3))
+    facestrs.append(ball((70, 80, 40), 20, (255, 255, 0), 0, 0, 1))
     f.write('\n'.join(facestrs))
 

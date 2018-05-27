@@ -10,7 +10,7 @@
 namespace Canyon {
 	class Scene {
 		public:
-			std::vector<Triangle> triangles;
+			std::vector<Object*> objects;
 			void load(std::istream&);
 			Colors getRayResult(Ray);
 	};

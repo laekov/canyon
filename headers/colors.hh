@@ -1,5 +1,6 @@
 #ifndef COLORS_HH
 #define COLORS_HH
+#include <point3.hh>
 
 #include <istream>
 #include <ostream>
@@ -20,7 +21,7 @@ namespace Canyon {
 					b > color_visible_thres;
 			}
 			inline bool isSource() {
-				return r == 1. || g == 1. || b == 1.;
+				return r >= 1. || g >= 1. || b >= 1.;
 			}
 	};
 
@@ -28,6 +29,10 @@ namespace Canyon {
 	std::ostream& operator <<(std::ostream& fou, const Colors& c);
 	Colors operator *(const Colors& a, const Colors& b);
 	Colors operator +(const Colors& a, const Colors& b);
+
+	inline double colorStrength(Colors x) {
+		return Point3(x.r, x.g, x.b).len();
+	}
 };
 
 #endif

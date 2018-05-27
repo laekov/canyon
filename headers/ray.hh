@@ -19,6 +19,6 @@ namespace Canyon {
 				c = c * delta_c;
 			}
 	};
-
+	Vector reflectDirection(Vector v, Vector n);
 };
 #endif

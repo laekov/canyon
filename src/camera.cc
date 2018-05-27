@@ -42,18 +42,19 @@ namespace Canyon {
 		return 0;
 #endif
 		for (int i = 0; i < this->height; ++ i) {
+#pragma openmp parallel for
 			for (int j = 0; j < this->width; ++ j) {
 				Ray trace_ray(eye, vb + vy * ((double)i / (this->height - 1)) + vx * ((double)j / (this->width - 1)) - eye);
 				trace_ray.c = Colors(1, 1, 1);
 				this->canvas[i][j] = scene.getRayResult(trace_ray);
-#ifdef DEBUG_OUT
-				static const char clrs[] = { 8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,0};
-				std::cerr << clrs << i << "/" << this->height << ", " << j << "/" << this->width << "\tRendered       ";
+#if FALSE
+				std::cerr << i << "/" << this->height << ", " << j << "/" << this->width << "\tRendered strength = " << colorStrength(this->canvas[i][j]) << "\n";
 #endif
 			}
 #ifdef DEBUG_OUT
 			if (((i + 1) & 0x7) == 0) {
 				this->save("tmp.png");
+				std::cerr << i << " lines rendered, written to tmp.png\n";
 			}
 #endif
 		}

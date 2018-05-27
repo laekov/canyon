@@ -1,4 +1,4 @@
-cc = g++ --std=c++11 -g -Iheaders
+cc = g++ -fopenmp --std=c++11 -g -Iheaders
 headers = $(wildcard headers/*.hh) 
 objects = $(headers:headers/%.hh=obj/%.o)
 libobjects = obj/lodepng.o

@@ -1,9 +1,11 @@
 #include <define.hh>
 #include <scene.hh>
 #include <triangle.hh>
+#include <ball.hh>
 #include <plane.hh>
 
 #include <queue>
+#include <string>
 
 #ifdef DEBUG_OUT
 #include <iostream>
@@ -11,10 +13,21 @@
 
 namespace Canyon {
 	void Scene::load(std::istream& fin) {
-		this->triangles.clear();
-		Triangle t;
-		while (fin >> t.a >> t.b >> t.c >> t.col >> t.smooth) {
-			this->triangles.push_back(t);
+		for (auto it: this->objects) {
+			delete &(*it);
+		}
+		this->objects.clear();
+		std::string obj_name;
+		while (fin >> obj_name) {
+			if (obj_name == "triangle") {
+				Triangle* t(new Triangle);
+				fin >> t->a >> t->b >> t->c >> t->col >> t->smooth;
+				this->objects.push_back(t);
+			} else if (obj_name == "ball") {
+				Ball* b(new Ball);
+				fin >> b->c >> b->r >> b->col >> b->smooth >> b->alpha >> b->n;
+				this->objects.push_back(b);
+			}
 		}
 	}
 
@@ -26,13 +39,14 @@ namespace Canyon {
 			Ray r(rays.front());
 			rays.pop();
 			Point3 p(ERROR_POINT);
-			Triangle* res_obj;
-			for (std::vector<Triangle>::iterator it = this->triangles.begin(); it != this->triangles.end(); ++ it) {
-				Point3 q(it->rayCrossPoint(r));
+			Object* res_obj;
+			for (auto it: this->objects) {
+				Object* o(it);
+				Point3 q(o->rayCrossPoint(r));
 				if (!q.isNaN()) {
 					if (p.isNaN() || sgn((q - p) * (q - r.p)) < 0) {
 						p = q;
-						res_obj = &(*it);
+						res_obj = o;
 					}
 				}
 			}
