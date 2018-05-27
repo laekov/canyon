@@ -42,7 +42,7 @@ namespace Canyon {
 		return 0;
 #endif
 		for (int i = 0; i < this->height; ++ i) {
-#pragma openmp parallel for
+#pragma omp parallel for
 			for (int j = 0; j < this->width; ++ j) {
 				Ray trace_ray(eye, vb + vy * ((double)i / (this->height - 1)) + vx * ((double)j / (this->width - 1)) - eye);
 				trace_ray.c = Colors(1, 1, 1);
