@@ -25,7 +25,8 @@ namespace Canyon {
 				}
 			}
 
-			int render(struct Scene&, int, int);
+			int render(struct Scene&, int, int, char* = 0);
+			void load(const char*);
 			int save(const char*);
 	};
 };

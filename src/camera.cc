@@ -17,7 +17,7 @@
 #endif
 
 namespace Canyon {
-	int Camera::render(Scene& scene, int width_, int height_) {
+	int Camera::render(Scene& scene, int width_, int height_, char* tmpfile) {
 		this->width = width_;
 		this->height = height_;
 		if (this->canvas) {
@@ -61,8 +61,12 @@ namespace Canyon {
 			}
 #ifdef DEBUG_OUT
 			if (((ic + 1) & 0x7) == 0) {
-				this->save("tmp.png");
-				std::cerr << ic << " lines rendered, written to tmp.png\n";
+				std::cerr << ic << " lines rendered";
+				if (tmpfile) {
+					this->save(tmpfile);
+					std::cerr << " written to " << tmpfile;
+				} 
+				std::cerr << '\n';
 			}
 #endif
 		}
@@ -93,5 +97,10 @@ namespace Canyon {
 			}
 		}
 		lodepng::encode(filename, img, this->width, this->height);
+	}
+
+	void Camera::load(const char* filename) {
+		std::ifstream fin(filename);
+		fin >> this->eye >> this->vb >> this->vx >> this->vy;
 	}
 };

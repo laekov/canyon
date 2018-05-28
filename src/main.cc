@@ -1,22 +1,36 @@
 #include <fstream>
 #include <iostream>
+#include <cstring>
 
 #include <camera.hh>
 #include <scene.hh>
 
-int main() {
+int main(int args, char* argv[]) {
+	char default_scene_file[] = "data/faces.mypoints";
+	char default_cam_config_file[] = "data/cam.mypoints";
+	char default_output_file[] = "results/tmp.png";
+	char* scene_file = default_scene_file;
+	char* cam_config_file = default_cam_config_file;
+	char* output_file = default_output_file;
+	int nwid(200);
+	int nhei(160);
+	for (int i = 1; i < args; ++ i) {
+		if (!strcmp(argv[i], "-x")) {
+			nwid = atoi(argv[++ i]);
+		} else if (!strcmp(argv[i], "-y")) {
+			nhei = atoi(argv[++ i]);
+		} else if (!strcmp(argv[i], "-o")) {
+			output_file = argv[++ i];
+		} else if (!strcmp(argv[i], "-scene")) {
+			scene_file = argv[++ i];
+		} else if (!strcmp(argv[i], "-camera")) {
+			cam_config_file = argv[++ i];
+		}
+	}
 	Canyon::Scene scene;
-	std::ifstream fin("data/faces.mypoints");
-	scene.load(fin);
-	fin.close();
+	scene.load(scene_file);
 	Canyon::Camera cam;
-	cam.eye = Canyon::Point3(50, 3, 50);
-	cam.vb = Canyon::Point3(49, 3.9, 49.2);
-	cam.vx = Canyon::Vector(2, 0, 0);
-	cam.vy = Canyon::Vector(0, 0, 1.6);
-	// cam.render(scene, 800, 640);
-	// cam.render(scene, 400, 320);
-	cam.render(scene, 200, 160);
-	// cam.save("qaq.png");
+	cam.load(cam_config_file);
+	cam.render(scene, nwid, nhei, output_file);
 }
 

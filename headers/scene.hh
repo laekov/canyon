@@ -11,7 +11,7 @@ namespace Canyon {
 	class Scene {
 		public:
 			std::vector<Object*> objects;
-			void load(std::istream&);
+			void load(const char*);
 			Colors getRayResult(Ray);
 	};
 };

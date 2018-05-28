@@ -3,6 +3,7 @@
 #include <triangle.hh>
 #include <ball.hh>
 #include <plane.hh>
+#include <fstream>
 
 #include <queue>
 #include <string>
@@ -12,7 +13,8 @@
 #endif
 
 namespace Canyon {
-	void Scene::load(std::istream& fin) {
+	void Scene::load(const char* filename) {
+		std::ifstream fin(filename);
 		for (auto it: this->objects) {
 			delete &(*it);
 		}

@@ -1,5 +1,5 @@
 def ptr2str(p):
-    return '%d %d %d' % (p[0], p[1], p[2])
+    return '%f %f %f' % (p[0], p[1], p[2])
 
 def face2str(a, b, c, d, col, smooth=0):
     return '\n'.join(['triangle %s %s %s %s %f' %
@@ -12,7 +12,7 @@ def face2str(a, b, c, d, col, smooth=0):
 def ball(c, r, col, smooth=1, alpha=0, n=1):
     return 'ball %s %f %s %f %f %f' % (ptr2str(c), r, ptr2str(col), smooth,
                                        alpha, n)
-def main():
+def makescene():
     sz = [ 100, 200, 100 ]
     facestrs = []
     for axe in range(0):
@@ -81,6 +81,16 @@ def main():
 
 
 with open('data/faces.mypoints', 'w') as f:
-    facestrs = main()
+    facestrs = makescene()
     f.write('\n'.join(facestrs))
 
+def makecam(wid=2., hei=1.6):
+    eye = (50., 3., 50.)
+    vb = (50. - wid / 2, 3.9, 50. - hei / 2)
+    vx = (wid, 0, 0)
+    vy = (0, 0, hei)
+    return [ptr2str(i) for i in [eye, vb, vx, vy]]
+
+with open('data/cam.mypoints', 'w') as f:
+    camstrs = makecam()
+    f.write('\n'.join(camstrs))
