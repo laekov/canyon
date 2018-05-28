@@ -38,11 +38,11 @@ namespace Canyon {
 	std::vector<Ray> Triangle::rayCrossOut(Ray r) {
 		std::vector<Ray> out_rays;
 		Point3 cp(this->rayCrossPoint(r));
-		Vector refd(reflectDirection(r.d, Plane(*this).n));
 		Vector nf(Plane(*this).n.unify());
-		if (sgn(nf * refd) < 0) {
+		if (sgn(nf * r.d) > 0) {
 			nf = nf * -1;
 		}
+		Vector refd(reflectDirection(r.d, nf));
 		out_rays.push_back(Ray(cp, refd, r.c * this->col * Colors(this->smooth)));
 		this->getDiffuseRay(r, out_rays, nf, cp);
 		return out_rays;

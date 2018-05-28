@@ -46,26 +46,36 @@ def main():
         if col is not None:
             facestrs.append(face2str(pb[0], pb[1], pb[2], pb[3], col))
     # Background
-    facestrs.append(face2str((-50, 140, 0), (40, 150, 0),
-                             (-50, 140, 100), (40, 150, 100),
+    facestrs.append(face2str((-50, 150, 0), (40, 120, 0),
+                             (-50, 150, 100), (40, 120, 100),
                              (255, 255, 0), smooth=0))
     # Floor
-    facestrs.append(face2str((-100, 0, 0), (300, 0, 0),
-                             (-100, 300, 0), (300, 300, 0),
+    facestrs.append(face2str((-300, 0, 0), (300, 0, 0),
+                             (-300, 300, 0), (300, 300, 0),
                              (90, ) * 3, smooth=0.00001))
     # Top light
-    facestrs.append(face2str((10, 50, 100), (50, 50, 100),
-                             (10, 200, 100), (50, 200, 100),
-                             (256, ) * 3))
+    for i in range(0, 200, 20):
+        facestrs.append(face2str((-20, i, 100), (-20, i + 10, 100),
+                                 (0, i, 120), (0, i + 10, 120),
+                                 (512, ) * 3))
+        facestrs.append(face2str((120, i, 100), (120, i + 10, 100),
+                                 (100, i, 120), (100, i + 10, 120),
+                                 (512, ) * 3))
     # Back light
     back_light = False
     if back_light:
         facestrs.append(face2str((0, 0, 0), (100, 0, 0),
                                 (0, 0, 100), (100, 0, 100),
                                 (256, ) * 3))
-    facestrs.append(ball((20, 90, 32), 30, (255, 255, 255), smooth=0.999,
+    # Red Mirror
+    facestrs.append(face2str((40, 200, 0), (200, 40, 0),
+                             (40, 200, 100), (200, 40, 100),
+                             (255, 200, 200), smooth = 0.9))
+    # Glass ball
+    facestrs.append(ball((40, 70, 22), 20, (255, 200, 200), smooth=0.999,
                     alpha=0.999, n=1.3))
-    facestrs.append(ball((40, 180, 45), 40, (225, 120, 225), smooth=0, 
+    # Solid ball
+    facestrs.append(ball((50, 100, 20), 15, (225, 120, 225), smooth=0, 
                     alpha=0, n=1))
     return facestrs
 

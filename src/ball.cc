@@ -31,6 +31,9 @@ namespace Canyon {
 		Point3 p(this->rayCrossPoint(ray));
 		if (!p.isNaN()) {
 			Vector n((p - this->c).unify());
+			if (sgn(n * ray.d) > 0) {
+				n = n * -1.;
+			}
 			bool all_reflect(0);
 			if (this->alpha > 0.) {
 				double stheta(sin(acos(n * ray.d.unify())));
@@ -56,6 +59,9 @@ namespace Canyon {
 			}
 			if (this->alpha < 1. || all_reflect) {
 				Vector reflect_direction(reflectDirection(ray.d, n));
+				if (sgn(n * reflect_direction) < 0) {
+					reflect_direction = reflect_direction * -1.;
+				}
 				Ray refl(p, reflect_direction, ray.c * 
 				    	 this->col * Colors(this->smooth) *
 						 Colors(all_reflect ? 1. :
