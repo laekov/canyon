@@ -7,19 +7,20 @@
 namespace Canyon {
 	Point3 Ball::rayCrossPoint(Ray l) {
 		Vector v(this->c - l.p);
-		double proj_len(v * l.d.unify());
-		Point3 a(l.p + l.d * proj_len);
+		Vector uld(l.d.unify());
+		double proj_len(v * uld);
+		Point3 a(l.p + uld * proj_len);
 		if (!this->pointIn(a)) {
 			return ERROR_POINT;
 		}
-		double deltad(sqrt(sqr(this->r) + sqr((a - this->c).len())));
-		Point3 p1(l.p + l.d.unify() * (proj_len - deltad));
-		Point3 p2(l.p - l.d.unify() * (proj_len + deltad));
-		double d1(p1 * l.d);
+		double deltad(sqrt(sqr(this->r) - sqr((a - this->c).len())));
+		Point3 p1(l.p + uld * (proj_len - deltad));
+		Point3 p2(l.p + uld * (proj_len + deltad));
+		double d1((p1 - l.p) * l.d);
 		if (sgn(d1) < 0) {
 			d1 = 1e100;
 		}
-		double d2(p2 * l.d);
+		double d2((p2 - l.p) * l.d);
 		if (sgn(d2) < 0) {
 			d2 = 1e100;
 		}
