@@ -5,7 +5,7 @@
 #include <iostream>
 
 namespace Canyon {
-	Point3 Ball::rayCrossPoint(Ray l) {
+	Point3 Ball::rayCrossPoint(Ray l, void*) {
 		Vector v(this->c - l.p);
 		Vector uld(l.d.unify());
 		double proj_len(v * uld);
@@ -32,43 +32,7 @@ namespace Canyon {
 		Point3 p(this->rayCrossPoint(ray));
 		if (!p.isNaN()) {
 			Vector n((p - this->c).unify());
-			if (sgn(n * ray.d) > 0) {
-				n = n * -1.;
-			}
-			bool all_reflect(0);
-			if (this->alpha > 0.) {
-				double stheta(sin(acos(n * ray.d.unify())));
-				if (this->pointIn(ray.p)) {
-					stheta *= this->n;
-				} else {
-					stheta /= this->n;
-				}
-				if (stheta < 1.) {
-					double theta(asin(stheta));
-					Vector dn(n *(n * ray.d));
-					Vector dvert(ray.d - dn);
-					Vector refrac_direction(dn.unify() +
-							                dvert.unify() * tan(theta));
-					Ray refrac(p, refrac_direction, 
-							   ray.c * this->col * 
-							   Colors(this->smooth) *
-							   Colors(this->alpha));
-					out_rays.push_back(refrac);
-				} else {
-					all_reflect = 1;
-				}
-			}
-			if (this->alpha < 1. || all_reflect) {
-				Vector reflect_direction(reflectDirection(ray.d, n));
-				if (sgn(n * reflect_direction) < 0) {
-					reflect_direction = reflect_direction * -1.;
-				}
-				Ray refl(p, reflect_direction, ray.c * 
-				    	 this->col * Colors(this->smooth) *
-						 Colors(all_reflect ? 1. :
-							    1. - this->alpha));
-				out_rays.push_back(refl);
-			}
+			this->getReflectAndRefracRay(ray, out_rays, n, p);
 			this->getDiffuseRay(ray, out_rays, n, p);
 		}
 		return out_rays;
@@ -76,5 +40,9 @@ namespace Canyon {
 
 	bool Ball::pointIn(Point3 p) {
 		return sgn((p - c).len() - r) < 0;
+	}
+
+	void Ball::read(std::istream& fin) {
+		fin >> this->c >> this->r >> this->col >> this->smooth >> this->alpha >> this->ray_n;
 	}
 };

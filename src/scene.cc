@@ -2,6 +2,7 @@
 #include <scene.hh>
 #include <triangle.hh>
 #include <ball.hh>
+#include <curverot.hh>
 #include <plane.hh>
 #include <fstream>
 
@@ -13,6 +14,13 @@
 #endif
 
 namespace Canyon {
+
+#define CREATE_NAMED_CLASS(obj_name, class_name, tgt) { \
+	if (obj_name == #class_name) { \
+		tgt = new class_name; \
+	} \
+}
+
 	void Scene::load(const char* filename) {
 		std::ifstream fin(filename);
 		for (auto it: this->objects) {
@@ -21,15 +29,12 @@ namespace Canyon {
 		this->objects.clear();
 		std::string obj_name;
 		while (fin >> obj_name) {
-			if (obj_name == "triangle") {
-				Triangle* t(new Triangle);
-				fin >> t->a >> t->b >> t->c >> t->col >> t->smooth;
-				this->objects.push_back(t);
-			} else if (obj_name == "ball") {
-				Ball* b(new Ball);
-				fin >> b->c >> b->r >> b->col >> b->smooth >> b->alpha >> b->n;
-				this->objects.push_back(b);
-			}
+			Object* o;
+			CREATE_NAMED_CLASS(obj_name, Triangle, o);
+			CREATE_NAMED_CLASS(obj_name, Ball, o);
+			CREATE_NAMED_CLASS(obj_name, CurveRot, o);
+			o->read(fin);
+			this->objects.push_back(o);
 		}
 	}
 

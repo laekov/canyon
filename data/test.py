@@ -11,6 +11,12 @@ def makescene():
     facestrs.append(face2str((-20, 0, 100), (-20, 200, 100),
                              (120, 0, 120), (0, 200, 120),
                              (512, ) * 3))
+    curve1 = [(0, 0), (1, 2), (2.5, 1), (3, 0), (3.5, 1), (4, 3), (5, 0)]
+    print_curve(curve1)
+    facestrs.append(bezierCurve((50, 90, 10), (0, 0, 50),
+                                curve1,
+                                (255, 255, 200)))
+    return facestrs
     # Back light
     back_light = False
     if back_light:

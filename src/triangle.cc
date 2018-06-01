@@ -19,7 +19,7 @@ namespace Canyon {
 		return sgn(u * v) > 0 && sgn(v * w) > 0;
 	}
 	
-	Point3 Triangle::rayCrossPoint(Ray r) {
+	Point3 Triangle::rayCrossPoint(Ray r, void*) {
 		Line l(r.p, r.d);
 		Plane p(*this);
 		Point3 cross_point(lineCrossPlane(l, p));
@@ -39,13 +39,13 @@ namespace Canyon {
 		std::vector<Ray> out_rays;
 		Point3 cp(this->rayCrossPoint(r));
 		Vector nf(Plane(*this).n.unify());
-		if (sgn(nf * r.d) > 0) {
-			nf = nf * -1;
-		}
-		Vector refd(reflectDirection(r.d, nf));
-		out_rays.push_back(Ray(cp, refd, r.c * this->col * Colors(this->smooth)));
+		this->getReflectAndRefracRay(r, out_rays, nf, cp);
 		this->getDiffuseRay(r, out_rays, nf, cp);
 		return out_rays;
+	}
+
+	void Triangle::read(std::istream& fin) {
+		fin >> this->a >> this->b >> this->c >> this->col >> this->smooth;
 	}
 
 };

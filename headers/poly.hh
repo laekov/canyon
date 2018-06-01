@@ -28,5 +28,6 @@ namespace Canyon {
     Poly operator +(const Poly&, const Poly&);
     Poly operator -(const Poly&, const Poly&);
     Poly operator *(const Poly&, const Poly&);
+    Poly operator *(const Poly&, const double&);
 };
 #endif

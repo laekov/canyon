@@ -108,6 +108,15 @@ namespace Canyon {
         return *this * *this;
     }
     
+    Poly operator *(const Poly& a, const double& b) {
+        Poly r(a);
+        for (int i = 0; i <= a.n; ++ i) {
+			r[i] *= b;
+		}
+		r.cut();
+		return r;
+	}
+
     Poly operator *(const Poly& a, const Poly& b) {
         Poly r(a.n + b.n);
         for (int i = 0; i <= a.n; ++ i) {

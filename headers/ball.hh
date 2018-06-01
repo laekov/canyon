@@ -13,10 +13,11 @@ namespace Canyon {
 			
 			Ball() {}
 
-			Point3 rayCrossPoint(Ray);
+			Point3 rayCrossPoint(Ray, void* = 0);
 			std::vector<Ray> rayCrossOut(Ray);
 
 			bool pointIn(Point3);
+			void read(std::istream& fin);
 	};
 };
 #endif
