@@ -50,13 +50,16 @@ namespace Canyon {
 		std::random_shuffle(order, order + this->height);
 		for (int ic = 0; ic < this->height; ++ ic) {
 			int i(order[ic]);
-// #pragma omp parallel for num_threads(32)
+#pragma omp parallel for schedule(dynamic, 1)
 			for (int j = 0; j < this->width; ++ j) {
-				Ray trace_ray(eye, vb + vy * ((double)i / (this->height - 1)) + vx * ((double)j / (this->width - 1)) - eye);
+				Ray trace_ray(eye, vb + vy * ((double)i / (this->height - 1)) +
+						      vx * ((double)j / (this->width - 1)) - eye);
 				trace_ray.c = Colors(1, 1, 1);
 				this->canvas[i][j] = scene.getRayResult(trace_ray);
-#if FALSE
-				std::cerr << i << "/" << this->height << ", " << j << "/" << this->width << "\tRendered strength = " << colorStrength(this->canvas[i][j]) << "\n";
+#if FALSE 
+				std::cerr << i << "/" << this->height << ", " << j << "/" <<
+				           	 this->width << "\tRendered strength = " << 
+							 colorStrength(this->canvas[i][j]) << "\n";
 #endif
 			}
 #ifdef DEBUG_OUT

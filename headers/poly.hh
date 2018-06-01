@@ -24,7 +24,8 @@ namespace Canyon {
             inline double operator()(const double& x) const {
                 return this->f(x);
             }
-    };
+			Poly& operator =(const Poly&);
+	};
     Poly operator +(const Poly&, const Poly&);
     Poly operator -(const Poly&, const Poly&);
     Poly operator *(const Poly&, const Poly&);

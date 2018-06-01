@@ -1,5 +1,8 @@
+#include <define.hh>
 #include <curverot.hh>
 #include <double.hh>
+
+#include <iostream>
 
 namespace Canyon {
 	Point3 CurveRot::rayCrossPoint(Ray ray, void* tmp_addr) {
@@ -95,7 +98,7 @@ namespace Canyon {
 		Poly t(1);
 		t[1] = 1., t[0] = 0;
 		Poly mt(1);
-		t[1] = -1., t[0] = 1.;
+		mt[1] = -1., mt[0] = 1.;
 		for (int i = 0; i < n; ++ i) {
 			px[i][0] = x[i];
 			py[i][0] = y[i];

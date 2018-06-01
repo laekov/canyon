@@ -85,7 +85,7 @@ namespace Canyon {
         for (int i = 0; i <= a.n; ++ i) {
             c[i] += a[i];
         }
-        for (int i = 0; i <= a.n; ++ i) {
+        for (int i = 0; i <= b.n; ++ i) {
             c[i] += b[i];
         }
         c.cut();
@@ -97,7 +97,7 @@ namespace Canyon {
         for (int i = 0; i <= a.n; ++ i) {
             c[i] += a[i];
         }
-        for (int i = 0; i <= a.n; ++ i) {
+        for (int i = 0; i <= b.n; ++ i) {
             c[i] -= b[i];
         }
         c.cut();
@@ -128,4 +128,9 @@ namespace Canyon {
         return r;
     }
 
+	Poly& Poly::operator =(const Poly& b) {
+		this->n = b.n;
+		this->a = b.a;
+		return *this;
+	}
 };
