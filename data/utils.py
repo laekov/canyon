@@ -34,5 +34,5 @@ def print_curve(pts):
     print('{')
     print('x: %s,' % x[n - 1][0])
     print('y: %s,' % y[n - 1][0])
-    print('min: 0, max: 1}')
+    print('min: 0, max: 1};')
     

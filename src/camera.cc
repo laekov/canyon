@@ -50,7 +50,7 @@ namespace Canyon {
 		std::random_shuffle(order, order + this->height);
 		for (int ic = 0; ic < this->height; ++ ic) {
 			int i(order[ic]);
-// #pragma omp parallel for schedule(dynamic, 1)
+#pragma omp parallel for schedule(dynamic, 1)
 			for (int j = 0; j < this->width; ++ j) {
 				Ray trace_ray(eye, vb + vy * ((double)i / (this->height - 1)) +
 						      vx * ((double)j / (this->width - 1)) - eye);
