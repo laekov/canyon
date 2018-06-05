@@ -60,7 +60,7 @@ namespace Canyon {
 			Vector by((p - q).unify());
 			Vector nf(by * this->x.df(cros_t) - bx * this->y.df(cros_t));
 			this->getReflectAndRefracRay(ray, out_rays, nf.unify(), p);
-			// this->getDiffuseRay(ray, out_rays, nf, p);
+			this->getDiffuseRay(ray, out_rays, nf, p);
 		}
 		return out_rays;
 	}
@@ -118,7 +118,7 @@ namespace Canyon {
 		this->x = px[0];
 		this->y = py[0];
 		double rx(this->x.max(0, this->v.len()));
-		double ry(this->x.max(0, this->v.len()));
+		double ry(this->y.max(0, this->v.len()));
 		double r((Vector(rx, ry, 0)).len());
 		this->box_lo = Point3(this->a.x + std::min(0., this->v.x) - r,
 				              this->a.y + std::min(0., this->v.y) - r,
