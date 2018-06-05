@@ -50,6 +50,9 @@ namespace Canyon {
 	void Object::getDiffuseRay(Ray r, std::vector<Ray>& out_rays, Vector nf,
 			Point3 cp) {
 		if (this->smooth < 1.) {
+			if (sgn(nf * r.d) > 0) {
+				nf = nf * -1.;
+			}
 			Vector u0(vertical(nf));
 			Vector u1(nf % u0);
 			double difc(sqrt(colorStrength(r.c) / color_visible_thres));
