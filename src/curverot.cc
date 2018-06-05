@@ -20,15 +20,15 @@ namespace Canyon {
 		} else {
 			// (rx(t) + s)^2 = (y(t))^2
 			Vector r(ray.d * (1. / (ray.d * uv)) - uv);
-			Vector s(ray.p - this->a + ray.d * ((this->a * uv) / (ray.d * uv) -
-					 (ray.p * uv) / (ray.d * uv)));
+			Vector s(ray.p - this->a + ray.d *
+					 ((this->a - rayd.p) / (ray.d * uv)));
 			// c2 (x(t))^2 + c1 x(t) + c0 = (y(t))^2
 			double c2(r * r);
 			double c1(r * s * 2.);
 			double c0_v(s * s);
 			Poly c0(0);
 			c0[0] = c0_v;
-			equ = Poly(this->x.sqr() * c2 + this->y * c1 + c0 - this->y.sqr());
+			equ = Poly(this->x.sqr() * c2 + this->x * c1 + c0 - this->y.sqr());
 		}
 		std::vector<double> sols(equ.getZeroPoints());
 		Point3 closest_p(ERROR_POINT);
