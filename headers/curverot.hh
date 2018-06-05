@@ -21,6 +21,8 @@ namespace Canyon {
 
 			 bool pointIn(Point3);
 			 void read(std::istream& fin);
+
+			 ~CurveRot() {}
 	 };
 };
 #endif

@@ -23,8 +23,8 @@ namespace Canyon {
 
 	void Scene::load(const char* filename) {
 		std::ifstream fin(filename);
-		for (auto it: this->objects) {
-			delete &(*it);
+		for (Object* it: this->objects) {
+			delete it;
 		}
 		this->objects.clear();
 		std::string obj_name;

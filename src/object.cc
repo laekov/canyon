@@ -56,8 +56,8 @@ namespace Canyon {
 			Vector u0(vertical(nf));
 			Vector u1(nf % u0);
 			double difc(sqrt(colorStrength(r.c) / color_visible_thres));
-			int ea(alpha_count * difc);
-			int et(theta_count * difc);
+			int ea((int)(alpha_count * difc));
+			int et((int)(theta_count * difc));
 			double erat(log(ea * et + 3) / (ea * et));
 			double cea(1. / (ea + 1));
 			double cet(1. / et);

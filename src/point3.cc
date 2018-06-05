@@ -11,7 +11,7 @@ namespace Canyon {
 	}
 
 	Point3 Point3::unify() const {
-		register double l(this->len());
+		double l(this->len());
 		if (sgn(l)) {
 			return Point3(this->x / l, this->y / l, this->z / l);
 		} else {
