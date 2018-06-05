@@ -100,9 +100,9 @@ namespace Canyon {
 		Poly *px = new Poly[n];
 		Poly *py = new Poly[n];
 		Poly t(1);
-		t[1] = 1., t[0] = 0;
+		t[1] = 1. / x[n - 1], t[0] = 0;
 		Poly mt(1);
-		mt[1] = -1., mt[0] = 1.;
+		mt[1] = -1. / x[n - 1], mt[0] = 1.;
 		for (int i = 0; i < n; ++ i) {
 			px[i][0] = x[i];
 			py[i][0] = y[i];

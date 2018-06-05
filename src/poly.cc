@@ -51,7 +51,7 @@ namespace Canyon {
 #define FIND_ZERO_POINT(l, r) { \
     if (sgn((r) - (l))) { \
         double s(newtonIter(*this, ((l) + (r))* .5)); \
-        if (!sgn(this->f(s))) { \
+        if (std::isfinite(s) && !sgn(this->f(s))) { \
             result.push_back(s); \
         } \
     } \
@@ -59,7 +59,7 @@ namespace Canyon {
     std::vector<double> Poly::getZeroPoints(double rl, double rr) const {
         std::vector<double> result;
         if (n == 0) {
-            if (a[0] == 0) {
+            if (!sgn(a[0])) {
                 result.push_back(rl);
                 result.push_back(rr);
             }
