@@ -15,7 +15,7 @@ def makescene():
     print_curve(curve1)
     facestrs.append(bezierCurve((50, 90, 10), (0, 0, 50),
                                 curve1,
-                                (255, 255, 200)))
+                                (255, 255, 200), smooth=0))
     return facestrs
     # Back light
     back_light = False

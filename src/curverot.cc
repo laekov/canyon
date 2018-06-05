@@ -25,7 +25,9 @@ namespace Canyon {
 			// c2 (x(t))^2 + c1 x(t) + c0 = (y(t))^2
 			double c2(r * r);
 			double c1(r * s * 2.);
-			double c0(s * s);
+			double c0_v(s * s);
+			Poly c0(0);
+			c0[0] = c0_v;
 			equ = Poly(this->x.sqr() * c2 + this->y * c1 + c0 - this->y.sqr());
 		}
 		std::vector<double> sols(equ.getZeroPoints());
@@ -56,9 +58,9 @@ namespace Canyon {
 			double x(this->x(cros_t));
 			Point3 q(bx * x + this->a);
 			Vector by((p - q).unify());
-			Vector nf(bx * this->x.df(cros_t) + by * this->y.df(cros_t));
-			this->getReflectAndRefracRay(ray, out_rays, nf, p);
-			this->getDiffuseRay(ray, out_rays, nf, p);
+			Vector nf(by * this->x.df(cros_t) - bx * this->y.df(cros_t));
+			this->getReflectAndRefracRay(ray, out_rays, nf.unify(), p);
+			// this->getDiffuseRay(ray, out_rays, nf, p);
 		}
 		return out_rays;
 	}
