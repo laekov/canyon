@@ -51,7 +51,7 @@ namespace Canyon {
 #define FIND_ZERO_POINT(l, r) { \
     if (sgn((r) - (l))) { \
         double s(newtonIter(*this, ((l) + (r))* .5)); \
-        if (std::isfinite(s) && !sgn(this->f(s))) { \
+        if (std::isfinite(s) && !sgn(this->f(s)) && s >= rl && s <= rr) { \
             result.push_back(s); \
         } \
     } \
@@ -77,6 +77,7 @@ namespace Canyon {
                 }
             }
         }
+		std::sort(result.begin(), result.end());
         return result;
     }
 
