@@ -33,7 +33,6 @@ namespace Canyon {
         for (int i = n; i; -- i) {
             dp.a[i - 1] = a[i] * i;
         }
-        dp.cut();
         return dp;
     }
 
@@ -89,7 +88,6 @@ namespace Canyon {
         for (int i = 0; i <= b.n; ++ i) {
             c[i] += b[i];
         }
-        c.cut();
         return c;
     }
 
@@ -101,7 +99,6 @@ namespace Canyon {
         for (int i = 0; i <= b.n; ++ i) {
             c[i] -= b[i];
         }
-        c.cut();
         return c;
     }
 
@@ -114,7 +111,6 @@ namespace Canyon {
         for (int i = 0; i <= a.n; ++ i) {
 			r[i] *= b;
 		}
-		r.cut();
 		return r;
 	}
 
@@ -125,7 +121,6 @@ namespace Canyon {
                 r.a[i + j] += a[i] * b[j];
             }
         }
-        r.cut();
         return r;
     }
 
