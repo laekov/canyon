@@ -30,7 +30,7 @@ namespace Canyon {
 			c0[0] = c0_v;
 			equ = Poly(this->x.sqr() * c2 + this->x * c1 + c0 - this->y.sqr());
 		}
-		std::vector<double> sols(equ.getZeroPoints());
+		std::vector<double> sols(equ.getZeroPoints(0, this->x_max));
 		Point3 closest_p(ERROR_POINT);
 		for (auto i: sols) {
 			double x(this->x(i));
@@ -71,7 +71,7 @@ namespace Canyon {
 		double dist((p - (this->a + uv * proj_len)).len());
 		Poly equ(this->x);
 		equ[0] -= proj_len;
-		auto sovs(equ.getZeroPoints());
+		auto sovs(equ.getZeroPoints(0, this->x_max));
 		int cnt_out(0);
 		for (auto i: sovs) {
 			if (sgn(this->y(i) - dist) >= 0) {
@@ -102,6 +102,7 @@ namespace Canyon {
 		Poly *px = new Poly[n];
 		Poly *py = new Poly[n];
 		Poly t(1);
+		this->x_max = x[n - 1];
 		t[1] = 1. / x[n - 1], t[0] = 0;
 		Poly mt(1);
 		mt[1] = -1. / x[n - 1], mt[0] = 1.;

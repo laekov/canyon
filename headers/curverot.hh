@@ -13,6 +13,7 @@ namespace Canyon {
 			 Vector v;
 			 Poly x, y;
 			 int n;
+			 double x_max;
 
 			 CurveRot() {}
 
