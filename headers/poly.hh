@@ -20,6 +20,7 @@ namespace Canyon {
             double df(double) const;
             Poly dy() const;
             std::vector<double> getZeroPoints(double = -INF, double = INF) const;
+			double max(double = -INF, double = INF) const;
             Poly sqr() const;
             inline double operator()(const double& x) const {
                 return this->f(x);

@@ -1,4 +1,6 @@
 #include <object.hh>
+#include <triangle.hh>
+#include <colors.hh>
 
 namespace Canyon {
 	const double alpha_count = .2;
@@ -68,5 +70,55 @@ namespace Canyon {
 				}
 			}
 		}
+	}
+
+	bool Object::inBox(Ray r) const {
+		Point3 p[8] = {
+			Point3(this->box_lo.x, this->box_lo.y, this->box_lo.z),
+			Point3(this->box_lo.x, this->box_hi.y, this->box_lo.z),
+			Point3(this->box_hi.x, this->box_hi.y, this->box_lo.z),
+			Point3(this->box_hi.x, this->box_lo.y, this->box_lo.z),
+			Point3(this->box_lo.x, this->box_lo.y, this->box_hi.z),
+			Point3(this->box_lo.x, this->box_hi.y, this->box_hi.z),
+			Point3(this->box_hi.x, this->box_hi.y, this->box_hi.z),
+			Point3(this->box_hi.x, this->box_lo.y, this->box_hi.z)};
+		Colors _c;
+		if (!(Triangle(p[0], p[1], p[2])).rayCrossPoint(r).isNaN()) {
+			return 1;
+		}
+		if (!(Triangle(p[0], p[3], p[2])).rayCrossPoint(r).isNaN()) {
+			return 1;
+		}
+		if (!(Triangle(p[4], p[5], p[6])).rayCrossPoint(r).isNaN()) {
+			return 1;
+		}
+		if (!(Triangle(p[4], p[7], p[6])).rayCrossPoint(r).isNaN()) {
+			return 1;
+		}
+		if (!(Triangle(p[0], p[1], p[4])).rayCrossPoint(r).isNaN()) {
+			return 1;
+		}
+		if (!(Triangle(p[5], p[1], p[4])).rayCrossPoint(r).isNaN()) {
+			return 1;
+		}
+		if (!(Triangle(p[2], p[3], p[6])).rayCrossPoint(r).isNaN()) {
+			return 1;
+		}
+		if (!(Triangle(p[7], p[3], p[6])).rayCrossPoint(r).isNaN()) {
+			return 1;
+		}
+		if (!(Triangle(p[0], p[4], p[3])).rayCrossPoint(r).isNaN()) {
+			return 1;
+		}
+		if (!(Triangle(p[7], p[4], p[3])).rayCrossPoint(r).isNaN()) {
+			return 1;
+		}
+		if (!(Triangle(p[1], p[2], p[5])).rayCrossPoint(r).isNaN()) {
+			return 1;
+		}
+		if (!(Triangle(p[6], p[2], p[5])).rayCrossPoint(r).isNaN()) {
+			return 1;
+		}
+		return 0;
 	}
 };

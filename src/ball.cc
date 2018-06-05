@@ -6,6 +6,9 @@
 
 namespace Canyon {
 	Point3 Ball::rayCrossPoint(Ray l, void*) {
+		if (!this->inBox(l)) {
+			return ERROR_POINT;
+		}
 		Vector v(this->c - l.p);
 		Vector uld(l.d.unify());
 		double proj_len(v * uld);
@@ -43,6 +46,9 @@ namespace Canyon {
 	}
 
 	void Ball::read(std::istream& fin) {
-		fin >> this->c >> this->r >> this->col >> this->smooth >> this->alpha >> this->ray_n;
+		fin >> this->c >> this->r >> this->col >> this->smooth >> this->alpha
+			>> this->ray_n;
+		this->box_lo = this->c - Point3(this->r, this->r, this->r);
+		this->box_hi = this->c + Point3(this->r, this->r, this->r);
 	}
 };

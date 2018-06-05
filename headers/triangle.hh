@@ -8,8 +8,8 @@ namespace Canyon {
 		public:
 			Point3 a, b, c;
 			Triangle() {}
-			Triangle(Point3 a_, Point3 b_, Point3 c_, Colors col_): a(a_),
-			    b(b_), c(c_), Object(col_) {}
+			Triangle(Point3 a_, Point3 b_, Point3 c_, Colors col_ = Colors(0)): 
+				a(a_), b(b_), c(c_), Object(col_) {}
 
 			Point3 rayCrossPoint(Ray, void* = 0);
 			std::vector<Ray> rayCrossOut(Ray);

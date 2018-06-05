@@ -1,11 +1,15 @@
 #include <define.hh>
 #include <curverot.hh>
 #include <double.hh>
+#include <algorithm>
 
 #include <iostream>
 
 namespace Canyon {
 	Point3 CurveRot::rayCrossPoint(Ray ray, void* tmp_addr) {
+		if (!this->inBox(ray)) {
+			return ERROR_POINT;
+		}
 		Vector uv(this->v.unify());
 		Poly equ;
 		if (!sgn(ray.d * uv)) {
@@ -111,6 +115,17 @@ namespace Canyon {
 		}
 		this->x = px[0];
 		this->y = py[0];
+		double rx(this->x.max(0, this->v.len()));
+		double ry(this->x.max(0, this->v.len()));
+		double r((Vector(rx, ry, 0)).len());
+		this->box_lo = Point3(this->a.x + std::min(0., this->v.x) - r,
+				              this->a.y + std::min(0., this->v.y) - r,
+				              this->a.z + std::min(0., this->v.z) - r);
+		this->box_hi = Point3(this->a.x + std::max(0., this->v.x) + r,
+				              this->a.y + std::max(0., this->v.y) + r,
+				              this->a.z + std::max(0., this->v.z) + r);
+		delete [] x;
+		delete [] y;
 		delete [] px;
 		delete [] py;
 	}

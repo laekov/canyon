@@ -13,6 +13,7 @@ namespace Canyon {
 			double smooth;
 			double alpha;
 			double ray_n;
+			Point3 box_lo, box_hi;
 			Object(): ray_n(0.), alpha(0.), smooth(0.), col(0.) {}
 			Object(Colors col_, double smooth_ = 0., double alpha_ = 0.,
 				   double n_ = 1.): col(col_) {}
@@ -22,6 +23,7 @@ namespace Canyon {
 			virtual void read(std::istream&) = 0;
 			void getDiffuseRay(Ray, std::vector<Ray>&, Vector, Point3);
 			void getReflectAndRefracRay(Ray, std::vector<Ray>&, Vector, Point3);
+			bool inBox(Ray) const;
 	};
 
 };
