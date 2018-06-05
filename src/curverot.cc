@@ -21,7 +21,7 @@ namespace Canyon {
 			// (rx(t) + s)^2 = (y(t))^2
 			Vector r(ray.d * (1. / (ray.d * uv)) - uv);
 			Vector s(ray.p - this->a + ray.d *
-					 ((this->a - rayd.p) / (ray.d * uv)));
+					 ((this->a - ray.p) * uv / (ray.d * uv)));
 			// c2 (x(t))^2 + c1 x(t) + c0 = (y(t))^2
 			double c2(r * r);
 			double c1(r * s * 2.);
@@ -36,7 +36,7 @@ namespace Canyon {
 			double x(this->x(i));
 			Point3 p_q(this->a + uv * x);
 			double k((p_q * uv - ray.p * uv) / (ray.d * uv));
-			Point3 crp(ray.p + k * ray.d);
+			Point3 crp(ray.p + ray.d * k);
 			double len_const((crp - ray.p) * ray.d);
 			if (sgn(len_const) > 0 && (closest_p.isNaN() ||
 						len_const < ((closest_p - ray.p) * ray.d))) {

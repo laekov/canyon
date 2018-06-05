@@ -35,6 +35,10 @@ namespace Canyon {
 		return Point3(a.x * b, a.y * b, a.z * b);
 	}
 
+	Point3 operator *(const double& b, const Point3& a) {
+		return Point3(a.x * b, a.y * b, a.z * b);
+	}
+
 	Point3 operator %(const Point3& a, const Point3& b) {
 		return Point3(a.y * b.z - a.z * b.y, a.z * b.x - a.x * b.z, a.x * b.y - a.y * b.x);
 	}

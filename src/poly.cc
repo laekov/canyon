@@ -137,7 +137,7 @@ namespace Canyon {
 	double Poly::max(double lo, double hi) const {
 		double res(std::max(this->f(lo), this->f(hi)));
 		Poly d(this->dy());
-		std::vector<double> mps(d.getZeroPoints());
+		std::vector<double> mps(d.getZeroPoints(lo, hi));
 		for (auto i: mps) {
 			res = std::max(res, this->f(i));
 		}

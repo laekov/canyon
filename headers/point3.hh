@@ -22,6 +22,7 @@ namespace Canyon {
 	Point3 operator -(const Point3& a, const Point3& b);
 	double operator *(const Point3& a, const Point3& b);
 	Point3 operator *(const Point3& a, const double& b);
+	Point3 operator *(const double& b, const Point3& a);
 	Point3 operator %(const Point3& a, const Point3& b);
 	bool operator ==(const Point3& a, const Point3& b);
 	double cosarc(const Point3& a, const Point3& b);
